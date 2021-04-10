@@ -6,30 +6,33 @@ import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BCM)
 
-## Hardware
+## Hardware - the LED pin
 led = LED(14)
 
-## GUI
+## GUI - create a new window
 win = tk.Tk()
 win.title("Morse Blink")
 buttonFont = tk.font.Font(family = 'Helvetica', size = 12, weight = "normal")
 
-## Program Functions
+## Program Functionality
 def dot():
+        ## This flashes the LED for a short time
         led.on()
         sleep(0.25)
         led.off()
         sleep(0.25)
 
 def dash():
+        ## This flashes the LED for a longer time
         led.on()
         sleep(0.5)
         led.off()
         sleep(0.5)
 
 def morseBlink():
-        entryString = str(entry.get()).lower() #converts the string into lowercase
-        for i in range(1, 13):
+        entryString = str(entry.get()).lower() ## Converts the string into lowercase, so that uppercase letters can be read below
+        for i in range(1, 13): ## Stops after blinking 12 characters
+                ## Each letter of the alphabet, in morse code:
                 if entryString[i] == "a":
                         dot()
                         dash()
@@ -141,8 +144,11 @@ def morseBlink():
 
 
 ## Widgets
-
+## Creates a text input box
 tk.Label(win, text="Enter your message: ").grid(row=0)
+## Takes the input from the text box
 entry = tk.Entry(win)
+## Displays the box
 entry.grid(row=0, column=1)
+## The button to trigger the blink program
 morseButton = tk.Button(win, text = 'Blink in Morse Code', font = buttonFont, command = morseBlink, bg = 'bisque2', height = 1, width = 24).grid(row=3,column=1,sticky=tk.W,pady=4)
